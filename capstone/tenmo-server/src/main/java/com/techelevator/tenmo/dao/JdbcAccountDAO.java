@@ -19,7 +19,7 @@ public class JdbcAccountDAO implements AccountDAO {
     @Override
     public Account getAccountBalance(int user_id) throws UserNotFoundException {
 Account account = null;
-String sql = "SELECT accounts.account_id, accounts.user_id, accounts.balance FROM accounts\n" +
+String sql = "SELECT accounts.account_id, users.user_id, accounts.balance, users.username FROM accounts\n" +
         "JOIN users ON users.user_id = accounts.user_id \n" +
         "WHERE users.user_id =? ;";
         SqlRowSet rows = jdbcTemplate.queryForRowSet(sql,user_id);
