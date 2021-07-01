@@ -57,8 +57,9 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void mainMenu() throws AccountServiceException {
+		userAccount=accountService.retrieveAccountByUserID(currentUser.getUser().getId());
+
 		while(true) {
-			userAccount=accountService.retrieveAccountByUserID(currentUser.getUser().getId());
 
 			String choice = (String)console.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			if(MAIN_MENU_OPTION_VIEW_BALANCE.equals(choice)) {
@@ -82,7 +83,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void viewCurrentBalance() throws AccountServiceException {
 		// TODO Auto-generated method stub
-		Account account = accountService.retrieveAccountByUserID(currentUser.getUser().getId());
+		//Account account = accountService.retrieveAccountByUserID(currentUser.getUser().getId());
 		console.printBalance(userAccount);
 	}
 
@@ -109,17 +110,19 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		Account choosenAccount=accountService.retrieveAccountByUserID(userIdChoosen);
 
 
-     if(amountToSend<=userAccount.getBalance()) {
-		 choosenAccount.setBalance(choosenAccount.getBalance() + amountToSend);
+     //if(amountToSend<=userAccount.getBalance()) {
+		// choosenAccount.setBalance(choosenAccount.getBalance() + amountToSend);
 		 userAccount.setBalance(userAccount.getBalance() - amountToSend);
-	 }
+	// }
+
 		//}
 		int transferId = (int) (10 + Math.random()*10);
 
-		accountService.makeTransfers(console.getTransferInfo(transferId,2,1,userAccount.getAccount_id(),choosenAccount.getAccount_id(),choosenAccount.getBalance()+amountToSend,choosenAccount.getUser_name(),userAccount.getBalance()-amountToSend));
+		accountService.makeTransfers(console.getTransferInfo(transferId,2,2,userAccount.getAccount_id(),choosenAccount.getAccount_id(),choosenAccount.getBalance()+amountToSend,choosenAccount.getUser_name()));
 		//account.setBalance(account.getBalance()-amountToSend);
 
 	}
+
 
 
 	private void requestBucks() {

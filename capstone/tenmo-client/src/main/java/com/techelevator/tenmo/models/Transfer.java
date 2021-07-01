@@ -8,7 +8,6 @@ public class Transfer {
     private int account_to;
     private double amount;
     private String userIdentity;
-    private double userBalance;
 
     public Transfer(int transfer_id, int transfers_type_id, int transfers_status_id, int account_from, int account_to, double amount) {
         this.transfer_id = transfer_id;
@@ -30,13 +29,6 @@ public class Transfer {
         this.userIdentity = userIdentity;
     }
 
-    public double getUserBalance() {
-        return userBalance;
-    }
-
-    public void setUserBalance(double userBalance) {
-        this.userBalance = userBalance;
-    }
 
     public int getTransfer_id() {
         return transfer_id;
