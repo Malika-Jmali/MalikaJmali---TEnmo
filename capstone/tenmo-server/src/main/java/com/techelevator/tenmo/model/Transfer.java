@@ -7,7 +7,8 @@ public class Transfer {
     private int account_from;
     private int account_to;
     private double amount;
-    private String transfer_type_desc;
+    private String userIdentity;
+    private double userBalance;
 
     public Transfer(int transfer_id, int transfers_type_id, int transfers_status_id, int account_from, int account_to, double amount, String transfer_type_desc) {
         this.transfer_id = transfer_id;
@@ -16,18 +17,25 @@ public class Transfer {
         this.account_from = account_from;
         this.account_to = account_to;
         this.amount = amount;
-        this.transfer_type_desc = transfer_type_desc;
     }
 
     public Transfer() {
     }
 
-    public String getTransfer_type_desc() {
-        return transfer_type_desc;
+    public String getUserIdentity() {
+        return userIdentity;
     }
 
-    public void setTransfer_type_desc(String transfer_type_desc) {
-        this.transfer_type_desc = transfer_type_desc;
+    public void setUserIdentity(String userIdentity) {
+        this.userIdentity = userIdentity;
+    }
+
+    public double getUserBalance() {
+        return userBalance;
+    }
+
+    public void setUserBalance(double userBalance) {
+        this.userBalance = userBalance;
     }
 
     public int getTransfer_id() {
