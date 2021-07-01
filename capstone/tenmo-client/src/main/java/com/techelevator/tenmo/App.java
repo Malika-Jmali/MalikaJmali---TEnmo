@@ -3,6 +3,7 @@ package com.techelevator.tenmo;
 import com.techelevator.tenmo.exceptions.AccountServiceException;
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.models.AuthenticatedUser;
+import com.techelevator.tenmo.models.Transfer;
 import com.techelevator.tenmo.models.UserCredentials;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
@@ -28,7 +29,9 @@ private static final String API_BASE_URL = "http://localhost:8080/";
     private AuthenticatedUser currentUser;
     private ConsoleService console;
     private AuthenticationService authenticationService;
-	private Account account;
+	private Account userAccount;
+	private Transfer transfer;
+
 
 	private AccountService accountService;
 
@@ -55,7 +58,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void mainMenu() throws AccountServiceException {
 		while(true) {
-			account=accountService.retrieveAccountByUserID(currentUser.getUser().getId());
+			userAccount=accountService.retrieveAccountByUserID(currentUser.getUser().getId());
 
 			String choice = (String)console.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			if(MAIN_MENU_OPTION_VIEW_BALANCE.equals(choice)) {
@@ -80,7 +83,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private void viewCurrentBalance() throws AccountServiceException {
 		// TODO Auto-generated method stub
 		Account account = accountService.retrieveAccountByUserID(currentUser.getUser().getId());
-		console.printBalance(account);
+		console.printBalance(userAccount);
 	}
 
 	private void viewTransferHistory() {
@@ -93,12 +96,31 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		
 	}
 
-	private void sendBucks() {
+	private void sendBucks() throws AccountServiceException {
 		// TODO Auto-generated method stub
 		console.showUsers(accountService.retrieveAccounts());
 
 
+		int userIdChoosen=console.askUserIdToSendMoney();
+
+		Double amountToSend=console.getTransferAmount();
+
+
+		Account choosenAccount=accountService.retrieveAccountByUserID(userIdChoosen);
+
+
+     if(amountToSend<=userAccount.getBalance()) {
+		 choosenAccount.setBalance(choosenAccount.getBalance() + amountToSend);
+		 userAccount.setBalance(userAccount.getBalance() - amountToSend);
+	 }
+		//}
+		int transferId = (int) (10 + Math.random()*10);
+
+		accountService.makeTransfers(console.getTransferInfo(transferId,2,1,userAccount.getAccount_id(),choosenAccount.getAccount_id(),choosenAccount.getBalance()+amountToSend,choosenAccount.getUser_name(),userAccount.getBalance()-amountToSend));
+		//account.setBalance(account.getBalance()-amountToSend);
+
 	}
+
 
 	private void requestBucks() {
 		// TODO Auto-generated method stub

@@ -2,6 +2,7 @@ package com.techelevator.view;
 
 
 import com.techelevator.tenmo.models.Account;
+import com.techelevator.tenmo.models.Transfer;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -56,7 +57,7 @@ public class ConsoleService {
 	}
 
 	public String getUserInput(String prompt) {
-		out.print(prompt+": ");
+		out.print(prompt + ": ");
 		out.flush();
 		return in.nextLine();
 	}
@@ -64,17 +65,18 @@ public class ConsoleService {
 	public Integer getUserInputInteger(String prompt) {
 		Integer result = null;
 		do {
-			out.print(prompt+": ");
+			out.print(prompt + ": ");
 			out.flush();
 			String userInput = in.nextLine();
 			try {
 				result = Integer.parseInt(userInput);
-			} catch(NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				out.println(System.lineSeparator() + "*** " + userInput + " is not valid ***" + System.lineSeparator());
 			}
-		} while(result == null);
+		} while (result == null);
 		return result;
 	}
+
 	//***************************************************************************************
 	public void showUsers(Account[] users) {
 
@@ -89,7 +91,8 @@ public class ConsoleService {
 		}
 
 	}
-//*******************************************************************************************
+
+	//*******************************************************************************************
 	public void printBalance(Account account) {
 
 		if (account == null) {
@@ -111,6 +114,60 @@ public class ConsoleService {
 
 	//********************************************************************************
 
+	public double getTransferAmount() {
+		Double transferAmount = null;
+		do {
+			out.print("Enter amount: ");
+			out.flush();
+			String userInput = in.nextLine();
+			try {
+				transferAmount = Double.parseDouble(userInput);
+			} catch (NumberFormatException e) {
+				out.println("\n*** " + userInput + " not valid ***\n");
+			}
+		} while (transferAmount == null || transferAmount < 0);
+		return transferAmount;
+	}
+
+	//***********************************************************************************************
+	public int askUserIdToSendMoney() {
+		Integer destinationId = null;
+		do {
+			out.print("Enter ID of user you are sending to (0 to cancel): ");
+			out.flush();
+			String userInput = in.nextLine();
+			try {
+				destinationId = Integer.parseInt(userInput);
+			} catch (NumberFormatException e) {
+				out.println("\n*** " + userInput + " is not valid ***\n");
+			}
+		} while (destinationId == null);
+		return destinationId;
+	}
+
+	//**********************************************************************************************
+
+	public Transfer getTransferInfo(int transferId,int transfertype, int transferStatus, int account_from, int account_to,double amount,String username, double userbalance){
+
+		Transfer transfer = new Transfer();
+		transfer.setTransfer_id(transferId);
+		transfer.setTransfers_type_id(transfertype);
+		transfer.setTransfers_status_id(transferStatus);
+		transfer.setAccount_from(account_from);
+		transfer.setAccount_to(account_to);
+		transfer.setAmount(amount);
+		transfer.setUserIdentity(username);
+		transfer.setUserBalance(userbalance);
+
+   return transfer;
+
+	}
 
 
-}
+
+		//
+
+
+
+
+	}

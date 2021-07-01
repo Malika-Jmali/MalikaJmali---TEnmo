@@ -62,6 +62,19 @@ public class AccountService {
         return accountsFound;
     }
 
+    public Transfer makeTransfers(Transfer transfer) {
+
+        try {
+            transfer=restTemplate.exchange(BASE_SERVICE_URL + "transfers" , HttpMethod.POST, makeTransferEntity(transfer), Transfer.class).getBody();
+        } catch (RestClientResponseException ex) {
+            // TODO
+        }
+       return transfer;
+
+    }
+
+
+
     private HttpEntity<Account> makeAccountEntity(Account account) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -84,18 +97,6 @@ public class AccountService {
         return entity;
     }
 
-    public void makeTransfers(Transfer transfer) throws AccountServiceException {
 
-        if(transfer == null) {
-            throw new AccountServiceException("Invalid User Name.");
-        }
-
-        try {
-            restTemplate.exchange(BASE_SERVICE_URL + "transfer" , HttpMethod.POST, makeTransferEntity(transfer), Transfer.class);
-        }
-        catch (RestClientResponseException ex) {
-            throw new AccountServiceException(ex.getRawStatusCode() + " : " + ex.getResponseBodyAsString());
-        }
-    }
 
 }
