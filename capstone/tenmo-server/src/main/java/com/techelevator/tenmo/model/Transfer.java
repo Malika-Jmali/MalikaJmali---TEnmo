@@ -1,23 +1,33 @@
 package com.techelevator.tenmo.model;
 
-public class Transfers {
+public class Transfer {
     private int transfer_id;
     private int transfers_type_id;
     private int transfers_status_id;
     private int account_from;
     private int account_to;
     private double amount;
+    private String transfer_type_desc;
 
-    public Transfers(int transfer_id, int transfers_type_id, int transfers_status_id, int account_from, int account_to, double amount) {
+    public Transfer(int transfer_id, int transfers_type_id, int transfers_status_id, int account_from, int account_to, double amount, String transfer_type_desc) {
         this.transfer_id = transfer_id;
         this.transfers_type_id = transfers_type_id;
         this.transfers_status_id = transfers_status_id;
         this.account_from = account_from;
         this.account_to = account_to;
         this.amount = amount;
+        this.transfer_type_desc = transfer_type_desc;
     }
 
-    public Transfers() {
+    public Transfer() {
+    }
+
+    public String getTransfer_type_desc() {
+        return transfer_type_desc;
+    }
+
+    public void setTransfer_type_desc(String transfer_type_desc) {
+        this.transfer_type_desc = transfer_type_desc;
     }
 
     public int getTransfer_id() {
