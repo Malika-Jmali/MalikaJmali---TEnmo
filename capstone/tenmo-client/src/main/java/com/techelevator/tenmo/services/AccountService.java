@@ -2,6 +2,7 @@ package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.exceptions.AccountServiceException;
 import com.techelevator.tenmo.models.Account;
+import com.techelevator.tenmo.models.Transfer;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -68,7 +69,13 @@ public class AccountService {
         HttpEntity<Account> entity = new HttpEntity<>(account, headers);
         return entity;
     }
-
+    private HttpEntity<Transfer> makeTransferEntity(Transfer transfer) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(AUTH_TOKEN);
+        HttpEntity<Transfer> entity = new HttpEntity<>(transfer, headers);
+        return entity;
+    }
     // MAKE AN AUTH ENTITY ONLY
     private HttpEntity makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();
@@ -76,4 +83,19 @@ public class AccountService {
         HttpEntity entity = new HttpEntity<>(headers);
         return entity;
     }
+
+    public void makeTransfers(Transfer transfer) throws AccountServiceException {
+
+        if(transfer == null) {
+            throw new AccountServiceException("Invalid User Name.");
+        }
+
+        try {
+            restTemplate.exchange(BASE_SERVICE_URL + "transfer" , HttpMethod.POST, makeTransferEntity(transfer), Transfer.class);
+        }
+        catch (RestClientResponseException ex) {
+            throw new AccountServiceException(ex.getRawStatusCode() + " : " + ex.getResponseBodyAsString());
+        }
+    }
+
 }

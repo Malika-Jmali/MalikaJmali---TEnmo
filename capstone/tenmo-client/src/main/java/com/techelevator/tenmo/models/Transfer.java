@@ -1,14 +1,16 @@
 package com.techelevator.tenmo.models;
 
-public class Transfers {
+public class Transfer {
     private int transfer_id;
     private int transfers_type_id;
     private int transfers_status_id;
     private int account_from;
     private int account_to;
     private double amount;
+    private String userIdentity;
+    private double userBalance;
 
-    public Transfers(int transfer_id, int transfers_type_id, int transfers_status_id, int account_from, int account_to, double amount) {
+    public Transfer(int transfer_id, int transfers_type_id, int transfers_status_id, int account_from, int account_to, double amount) {
         this.transfer_id = transfer_id;
         this.transfers_type_id = transfers_type_id;
         this.transfers_status_id = transfers_status_id;
@@ -17,7 +19,23 @@ public class Transfers {
         this.amount = amount;
     }
 
-    public Transfers() {
+    public Transfer() {
+    }
+
+    public String getUserIdentity() {
+        return userIdentity;
+    }
+
+    public void setUserIdentity(String userIdentity) {
+        this.userIdentity = userIdentity;
+    }
+
+    public double getUserBalance() {
+        return userBalance;
+    }
+
+    public void setUserBalance(double userBalance) {
+        this.userBalance = userBalance;
     }
 
     public int getTransfer_id() {
