@@ -1,7 +1,10 @@
 package com.techelevator.tenmo;
 
+import com.techelevator.tenmo.exceptions.AccountServiceException;
+import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.models.AuthenticatedUser;
 import com.techelevator.tenmo.models.UserCredentials;
+import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.AuthenticationServiceException;
 import com.techelevator.view.ConsoleService;
@@ -25,18 +28,23 @@ private static final String API_BASE_URL = "http://localhost:8080/";
     private AuthenticatedUser currentUser;
     private ConsoleService console;
     private AuthenticationService authenticationService;
+	private Account account;
 
-    public static void main(String[] args) {
-    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
+	private AccountService accountService;
+
+
+	public static void main(String[] args) throws AccountServiceException {
+    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL),new AccountService(API_BASE_URL));
     	app.run();
     }
 
-    public App(ConsoleService console, AuthenticationService authenticationService) {
+    public App(ConsoleService console, AuthenticationService authenticationService,AccountService accountService) {
 		this.console = console;
 		this.authenticationService = authenticationService;
+		this.accountService=accountService;
 	}
 
-	public void run() {
+	public void run() throws AccountServiceException {
 		System.out.println("*********************");
 		System.out.println("* Welcome to TEnmo! *");
 		System.out.println("*********************");
@@ -45,8 +53,10 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		mainMenu();
 	}
 
-	private void mainMenu() {
+	private void mainMenu() throws AccountServiceException {
 		while(true) {
+			account=accountService.retrieveAccountByUserID(currentUser.getUser().getId());
+
 			String choice = (String)console.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			if(MAIN_MENU_OPTION_VIEW_BALANCE.equals(choice)) {
 				viewCurrentBalance();
@@ -67,9 +77,10 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		}
 	}
 
-	private void viewCurrentBalance() {
+	private void viewCurrentBalance() throws AccountServiceException {
 		// TODO Auto-generated method stub
-		
+		Account account = accountService.retrieveAccountByUserID(currentUser.getUser().getId());
+		console.printBalance(account);
 	}
 
 	private void viewTransferHistory() {
@@ -84,7 +95,9 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-		
+		console.showUsers(accountService.retrieveAccounts());
+
+
 	}
 
 	private void requestBucks() {

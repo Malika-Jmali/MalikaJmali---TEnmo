@@ -1,6 +1,8 @@
 package com.techelevator.view;
 
 
+import com.techelevator.tenmo.models.Account;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -73,4 +75,42 @@ public class ConsoleService {
 		} while(result == null);
 		return result;
 	}
+	//***************************************************************************************
+	public void showUsers(Account[] users) {
+
+		System.out.println("----------------------------------------------------------------------------------");
+		System.out.println("Users");
+		System.out.println(String.format("%-20s %-20s", "ID", "Name"));
+		System.out.println("----------------------------------------------------------------------------------");
+
+		for (Account account1 : users) {
+			System.out.println(String.format("%-20d %-20s", account1.getUser_id(), account1.getUser_name()));
+
+		}
+
+	}
+//*******************************************************************************************
+	public void printBalance(Account account) {
+
+		if (account == null) {
+			System.out.println("No results found... Please try again.");
+			return;
+		}
+
+		System.out.println("Your current account balance is:  $" + account.getBalance());
+
+//*****************************************************************************************
+
+	}
+
+	public int userIdFromUser() {
+		System.out.println("Enter the userid ");
+		int days = Integer.parseInt(in.next());
+		return days;
+	}
+
+	//********************************************************************************
+
+
+
 }

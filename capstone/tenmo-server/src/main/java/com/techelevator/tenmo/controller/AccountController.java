@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.swing.*;
+import java.util.List;
 
 
 @PreAuthorize("isAuthenticated()")
@@ -27,6 +28,12 @@ public class AccountController {
     @RequestMapping(path = "accounts/{user_id}", method = RequestMethod.GET)
     public Account retrieveBalanceByUserId(@PathVariable int  user_id) throws UserNotFoundException {
         return dao.getAccountBalance(user_id);
+    }
+
+    @PreAuthorize("permitAll")
+    @RequestMapping(path = "accounts", method  = RequestMethod.GET)
+    public List<Account> retrieveAccounts() {
+        return dao.retrieveListOfAccounts();
     }
 
 
