@@ -73,6 +73,23 @@ public class AccountService {
 
     }
 
+    public Transfer[] retrieveTransferList(int user_id) throws AccountServiceException {
+        Transfer[] transfers = null;
+
+        try {
+
+            transfers = restTemplate.exchange(BASE_SERVICE_URL + "transfers/" + user_id, HttpMethod.GET, makeAuthEntity(), Transfer[].class).getBody();
+        } catch (RestClientResponseException ex) {
+            if(ex.getRawStatusCode() == 404) {
+                return null;
+            }
+            throw new AccountServiceException(ex.getRawStatusCode() + " : " + ex.getResponseBodyAsString());
+        }
+
+        return transfers;
+
+    }
+
 
 
 
