@@ -92,20 +92,7 @@ public class App {
 		console.printTransferDetails(transfers,transferId);
 
 
-//		for (Transfer transfer1 : transfers) {
-//			if (transfer1.getTransfer_id()==transferId){
-//				System.out.println("\n__________________________________________");
-//				System.out.println("Transfer Details");
-//				System.out.println("--------------------------------------------\n");
-//				System.out.println("Id:"+ transfer1.getTransfer_id());
-//				System.out.println("From:"+transfer1.getUsernameFrom());
-//				System.out.println("Type:"+ transfer1.getTransfers_type_id());
-//				System.out.println("Status:"+transfer1.getTransfers_status_id());
-//				System.out.println("Amount: $"+ transfer1.getAmount());
-//			}
-//
-//		}
-//
+
 
 
 	}
