@@ -51,17 +51,35 @@ String sql = "SELECT accounts.account_id, users.user_id, accounts.balance, users
             Account account = mapRowAccount(rows);
             accounts.add(account);
         }
-
         return accounts;
     }
         @Override
     public Account findAccountbyAccountID(int  account_id) throws UserNotFoundException {
-        String sql = "SELECT user_id, balance FROM accounts  WHERE account_id= ?;";
+        String sql = "SELECT account_id,user_id, balance FROM accounts  WHERE account_id= ?;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, account_id);
         if (rowSet.next()) {
-            mapRowAccount(rowSet);
+            mapRowAccount1(rowSet);
         }
-        return mapRowAccount((rowSet));
+        return mapRowAccount1((rowSet));
+    }
+
+    @Override
+    public Account updateAccount(Account account, int account_id) throws UserNotFoundException {
+
+        String updateUserBalanceSql = "UPDATE accounts SET account_id =?, user_id = ?, balance = ? WHERE account_id = ?";
+        jdbcTemplate.update(updateUserBalanceSql,account.getAccount_id(),account.getUser_id(),account.getBalance(),account.getAccount_id());
+
+        return account;
+
+
+    }
+
+    private Account mapRowAccount1(SqlRowSet rows){
+        Account account = new Account();
+        account.setAccount_id(rows.getInt("account_id"));
+        account.setUser_id(rows.getInt("user_id"));
+        account.setBalance(rows.getDouble("balance"));
+        return account;
     }
 
     private Account mapRowAccount(SqlRowSet rows){

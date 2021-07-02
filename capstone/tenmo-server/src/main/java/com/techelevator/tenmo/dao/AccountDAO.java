@@ -13,4 +13,7 @@ public interface AccountDAO {
 
     public Account findAccountbyAccountID(int  account_id) throws UserNotFoundException;
 
+    public Account updateAccount(Account account,int account_id)  throws UserNotFoundException;
+
+
 }

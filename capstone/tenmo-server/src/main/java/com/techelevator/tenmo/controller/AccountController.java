@@ -82,5 +82,12 @@ public class AccountController {
         return userDAO.findIdByUsername(username);
     }
 
+    @PreAuthorize("permitAll")
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "accounts/{account_id}", method = RequestMethod.PUT)
+    public Account updateAccount( @RequestBody Account account,@PathVariable int account_id)throws UserNotFoundException {
+        return dao.updateAccount(account,account_id);
+    }
+
 
 }

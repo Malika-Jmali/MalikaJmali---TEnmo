@@ -3,6 +3,7 @@ package com.techelevator.tenmo.dao;
 import com.techelevator.tenmo.exception.UserNotFoundException;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import java.util.List;
 @Component
 public class JdbcTransferDAO implements TransferDAO {
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
     private AccountDAO accountDAO;
 
     public JdbcTransferDAO(JdbcTemplate jdbcTemplate) {
@@ -21,9 +24,8 @@ public class JdbcTransferDAO implements TransferDAO {
 
     @Override
     public Transfer makeTransfer(Transfer transfer) throws UserNotFoundException {
-        String transferSQL = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES (?, ?, ?, ?, ?, ?);\n";
+        String transferSQL = "INSERT INTO transfers ( transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES (?, ?, ?, ?, ?);\n";
         jdbcTemplate.update(transferSQL,
-                transfer.getTransfer_id(),
                 transfer.getTransfers_type_id(),
                 transfer.getTransfers_status_id(),
                 transfer.getAccount_from(),
@@ -31,18 +33,18 @@ public class JdbcTransferDAO implements TransferDAO {
                 transfer.getAmount());
 
 
-        Account account=accountDAO.findAccountbyAccountID(transfer.getAccount_from());
-     account.setBalance(account.getBalance()-transfer.getAmount());
+        Account accountFrom=accountDAO.findAccountbyAccountID(transfer.getAccount_from());
+     accountFrom.setBalance(accountFrom.getBalance()-transfer.getAmount());
 
-     Account account1=accountDAO.findAccountbyAccountID(transfer.getAccount_to());
-     account1.setBalance(account1.getBalance()+transfer.getAmount());
+     Account accountTo=accountDAO.findAccountbyAccountID(transfer.getAccount_to());
+     accountTo.setBalance(accountTo.getBalance()+transfer.getAmount());
 
 
-    String updateUserBalanceSql = "UPDATE accounts SET account_id =?, user_id = ?, balance = ? WHERE account_id = ?";
-     jdbcTemplate.update(updateUserBalanceSql,account.getAccount_id(),account.getUser_id(),account.getBalance(),account.getAccount_id());
+    String updateUserBalanceSql = "UPDATE accounts SET  balance = ? WHERE account_id = ?";
+     jdbcTemplate.update(updateUserBalanceSql,accountFrom.getBalance(),accountFrom.getAccount_id());
 
-     String sqlReceiverBalanceSql="UPDATE accounts SET account_id =?, user_id = ?, balance = ? WHERE account_id = ?";
-     jdbcTemplate.update(sqlReceiverBalanceSql,account1.getAccount_id(),account1.getUser_id(),account1.getBalance(),account1.getAccount_id());
+     String sqlReceiverBalanceSql="UPDATE accounts SET balance = ? WHERE account_id = ?";
+     jdbcTemplate.update(sqlReceiverBalanceSql,accountTo.getBalance(),accountTo.getAccount_id());
 
 
 
