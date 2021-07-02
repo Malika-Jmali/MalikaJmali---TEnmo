@@ -162,25 +162,25 @@ public class ConsoleService {
    return transfer;
 
 	}
-	public void printTransferList(int user_id){
-		Transfer transfer = new Transfer();
-		User user_name= new User();
-		transfer.setTransfer_id(transfer);
-	}
+//	public void printTransferList(int user_id){
+//		Transfer transfer = new Transfer();
+//		User user_name= new User();
+//		transfer.setTransfer_id(transfer);
+//	}
 
-	public void showTransfers(Transfer[] transfers) {
+//	public void showTransfers(Transfer[] transfers) {
+//
+//		System.out.println("----------------------------------------------------------------------------------");
+//		System.out.println("Transfers");
+//		System.out.println(String.format("%-20s %-20s", "ID", "Name"));
+//		System.out.println("----------------------------------------------------------------------------------");
+//
+//		for (Account account1 : transfers) {
+//			System.out.println(String.format("%-20d %-20s", account1.getUser_id(), account1.getUser_name()));
+//
+//		}
 
-		System.out.println("----------------------------------------------------------------------------------");
-		System.out.println("Transfers");
-		System.out.println(String.format("%-20s %-20s", "ID", "Name"));
-		System.out.println("----------------------------------------------------------------------------------");
-
-		for (Account account1 : transfers) {
-			System.out.println(String.format("%-20d %-20s", account1.getUser_id(), account1.getUser_name()));
-
-		}
-
-	}
+	//}
 
 
 
