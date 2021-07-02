@@ -80,8 +80,8 @@ public class App {
 
 	private void viewCurrentBalance() throws AccountServiceException {
 		// TODO Auto-generated method stub
-		//Account account = accountService.retrieveAccountByUserID(currentUser.getUser().getId());
-		console.printBalance(userAccount);
+		Account account = accountService.retrieveAccountByUserID(currentUser.getUser().getId());
+		console.printBalance(account);
 	}
 
 	private void viewTransferHistory() throws AccountServiceException {
