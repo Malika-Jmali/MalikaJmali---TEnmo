@@ -110,17 +110,17 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		Account choosenAccount=accountService.retrieveAccountByUserID(userIdChoosen);
 
 
-     //if(amountToSend<=userAccount.getBalance()) {
-		// choosenAccount.setBalance(choosenAccount.getBalance() + amountToSend);
-		 userAccount.setBalance(userAccount.getBalance() - amountToSend);
-	// }
+     if(amountToSend<=userAccount.getBalance()) {
 
-		//}
-		int transferId = (int) (50 + Math.random()*10);
 
-		accountService.makeTransfers(console.getTransferInfo(2,2,userAccount.getAccount_id(),choosenAccount.getAccount_id(),amountToSend,choosenAccount.getUser_name()));
-		//accountService.makeTransfers(console.getTransferInfo(2,userAccount.getAccount_id(),choosenAccount.getAccount_id(),choosenAccount.getBalance()+amountToSend,choosenAccount.getUser_name()));
-		//account.setBalance(account.getBalance()-amountToSend);
+		 accountService.makeTransfers(console.getTransferInfo(2, 2, userAccount.getAccount_id(), choosenAccount.getAccount_id(), amountToSend, choosenAccount.getUser_name()));
+		 //accountService.makeTransfers(console.getTransferInfo(2,userAccount.getAccount_id(),choosenAccount.getAccount_id(),choosenAccount.getBalance()+amountToSend,choosenAccount.getUser_name()));
+		 //account.setBalance(account.getBalance()-amountToSend);
+
+
+	 }else{
+		 System.out.println("Insufficient Amount");
+	 }
 
 
 	}
