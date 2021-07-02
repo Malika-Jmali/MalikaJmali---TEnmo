@@ -7,11 +7,12 @@ public class Transfer {
     private int account_from;
     private int account_to;
     private double amount;
-    private String userIdentity;
-    private double userBalance;
+    private String usernameTo;
+    private String usernameFrom;
+    private int from_User_Id;
+    private int to_User_Id;
 
-    public Transfer(int transfer_id, int transfers_type_id, int transfers_status_id, int account_from, int account_to, double amount, String transfer_type_desc) {
-        this.transfer_id = transfer_id;
+    public Transfer( int transfers_type_id, int transfers_status_id, int account_from, int account_to, double amount, String transfer_type_desc) {
         this.transfers_type_id = transfers_type_id;
         this.transfers_status_id = transfers_status_id;
         this.account_from = account_from;
@@ -22,22 +23,6 @@ public class Transfer {
     public Transfer() {
     }
 
-    public String getUserIdentity() {
-        return userIdentity;
-    }
-
-    public void setUserIdentity(String userIdentity) {
-        this.userIdentity = userIdentity;
-    }
-
-    public double getUserBalance() {
-        return userBalance;
-    }
-
-    public void setUserBalance(double userBalance) {
-        this.userBalance = userBalance;
-    }
-
     public int getTransfer_id() {
         return transfer_id;
     }
@@ -45,6 +30,43 @@ public class Transfer {
     public void setTransfer_id(int transfer_id) {
         this.transfer_id = transfer_id;
     }
+
+    public String getUsernameFrom() {
+        return usernameFrom;
+    }
+
+    public void setUsernameFrom(String usernameFrom) {
+        this.usernameFrom = usernameFrom;
+    }
+
+    public int getFrom_User_Id() {
+        return from_User_Id;
+    }
+
+    public void setFrom_User_Id(int from_User_Id) {
+        this.from_User_Id = from_User_Id;
+    }
+
+    public int getTo_User_Id() {
+        return to_User_Id;
+    }
+
+    public void setTo_User_Id(int to_User_Id) {
+        this.to_User_Id = to_User_Id;
+    }
+
+    public String getUsernameTo() {
+        return usernameTo;
+    }
+
+    public void setUsernameTo(String usernameTo) {
+        this.usernameTo = usernameTo;
+    }
+
+
+
+
+
 
     public int getTransfers_type_id() {
         return transfers_type_id;

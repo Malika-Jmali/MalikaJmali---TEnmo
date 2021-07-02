@@ -148,20 +148,62 @@ public class ConsoleService {
 
 	//**********************************************************************************************
 
-	public Transfer getTransferInfo(int transfertype, int transferStatus, int account_from, int account_to,double amount,String username){
+	public Transfer getTransferInfo(int transferType, int transferStatus, int account_from, int account_to, double amount, String username) {
 
 		Transfer transfer = new Transfer();
 		//transfer.setTransfer_id(transferId);
-		transfer.setTransfers_type_id(transfertype);
+		transfer.setTransfers_type_id(transferType);
 		transfer.setTransfers_status_id(transferStatus);
 		transfer.setAccount_from(account_from);
 		transfer.setAccount_to(account_to);
 		transfer.setAmount(amount);
-		transfer.setUserIdentity(username);
+		transfer.setUsernameFrom(username);
 
-   return transfer;
+		return transfer;
 
 	}
+
+	//****************************************************************************************TRANSFERLIST
+	public void printListOfTransfers(Transfer[] transfers, String username) {
+
+		System.out.println("_________________________________________________________________________");
+		System.out.println("Transfers");
+		System.out.println(String.format("%-20s %-20s %-20s", "ID", "From/To", "Amount"));
+		System.out.println("_________________________________________________________________________");
+
+
+		for (Transfer transfer : transfers) {
+			if (transfer.getUsernameFrom().equalsIgnoreCase(username)) {
+				System.out.println(String.format("%-20d %-20s $%-20.2f", transfer.getTransfer_id(), transfer.getUsernameTo(), transfer.getAmount()));
+			}
+			if (transfer.getUsernameTo().equalsIgnoreCase(username)) {
+				System.out.println(String.format("%-20d %-20s $%-20.2f", transfer.getTransfer_id(), transfer.getUsernameFrom(), transfer.getAmount()));
+			}
+		}
+
+		System.out.println();
+
+
+	}
+
+
+	//**************************************************************************************************TRANSFERLIST
+
+	public void printTransfer(Transfer transfer) {
+
+
+		if (transfer == null) {
+			System.out.println("No results found... Please try again.");
+			return;
+		}
+
+		//System.out.println(String.format("%-20d %-20s $%-20.2f", transfer.getTransfer_id(), transfer.getUserIdentity(), transfer.getAmount()));
+		//	System.out.println(String.format("%-20d %-20s %-20.2f",transfer.getTransfer_id(),transfer.getAccount_to(),transfer.getAmount()));
+
+
+	}
+
+
 //	public void printTransferList(int user_id){
 //		Transfer transfer = new Transfer();
 //		User user_name= new User();
@@ -180,9 +222,10 @@ public class ConsoleService {
 //
 //		}
 
-	//}
+}
 
 
 
 
-	}
+
+
