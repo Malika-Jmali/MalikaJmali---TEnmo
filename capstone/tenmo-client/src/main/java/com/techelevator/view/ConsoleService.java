@@ -147,10 +147,10 @@ public class ConsoleService {
 
 	//**********************************************************************************************
 
-	public Transfer getTransferInfo(int transferId,int transfertype, int transferStatus, int account_from, int account_to,double amount,String username){
+	public Transfer getTransferInfo(int transfertype, int transferStatus, int account_from, int account_to,double amount,String username){
 
 		Transfer transfer = new Transfer();
-		transfer.setTransfer_id(transferId);
+		//transfer.setTransfer_id(transferId);
 		transfer.setTransfers_type_id(transfertype);
 		transfer.setTransfers_status_id(transferStatus);
 		transfer.setAccount_from(account_from);
