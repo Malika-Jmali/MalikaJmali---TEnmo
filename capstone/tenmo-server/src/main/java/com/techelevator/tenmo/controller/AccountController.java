@@ -71,7 +71,7 @@ public class AccountController {
     @PreAuthorize("permitAll")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "transfers", method = RequestMethod.POST)
-    public Transfer addTransfer( @RequestBody Transfer transfer) {
+    public Transfer addTransfer( @RequestBody Transfer transfer)throws UserNotFoundException {
         return transferDAO.makeTransfer(transfer);
     }
 

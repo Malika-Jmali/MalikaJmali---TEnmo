@@ -54,6 +54,15 @@ String sql = "SELECT accounts.account_id, users.user_id, accounts.balance, users
 
         return accounts;
     }
+        @Override
+    public Account findAccountbyAccountID(int  account_id) throws UserNotFoundException {
+        String sql = "SELECT user_id, balance FROM accounts  WHERE account_id= ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, account_id);
+        if (rowSet.next()) {
+            mapRowAccount(rowSet);
+        }
+        return mapRowAccount((rowSet));
+    }
 
     private Account mapRowAccount(SqlRowSet rows){
         Account account = new Account();

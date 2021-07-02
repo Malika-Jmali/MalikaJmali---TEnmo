@@ -11,4 +11,6 @@ public interface AccountDAO {
 
     List<Account> retrieveListOfAccounts();
 
+    public Account findAccountbyAccountID(int  account_id) throws UserNotFoundException;
+
 }

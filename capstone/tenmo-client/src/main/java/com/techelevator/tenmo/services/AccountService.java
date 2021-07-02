@@ -73,6 +73,17 @@ public class AccountService {
 
     }
 
+    public Transfer changeBalance(Transfer transfer,int account_id) {
+
+        try {
+            transfer=restTemplate.exchange(BASE_SERVICE_URL + "transfers/"+account_id , HttpMethod.PUT, makeTransferEntity(transfer), Transfer.class).getBody();
+        } catch (RestClientResponseException ex) {
+            // TODO
+        }
+        return transfer;
+
+    }
+
 
 
     private HttpEntity<Account> makeAccountEntity(Account account) {

@@ -1,5 +1,7 @@
 package com.techelevator.tenmo.dao;
 
+import com.techelevator.tenmo.exception.UserNotFoundException;
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -11,13 +13,14 @@ import java.util.List;
 @Component
 public class JdbcTransferDAO implements TransferDAO {
     private JdbcTemplate jdbcTemplate;
+    private AccountDAO accountDAO;
 
     public JdbcTransferDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public Transfer makeTransfer(Transfer transfer) {
+    public Transfer makeTransfer(Transfer transfer) throws UserNotFoundException {
         String transferSQL = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES (?, ?, ?, ?, ?, ?);\n";
         jdbcTemplate.update(transferSQL,
                 transfer.getTransfer_id(),
@@ -26,6 +29,24 @@ public class JdbcTransferDAO implements TransferDAO {
                 transfer.getAccount_from(),
                 transfer.getAccount_to(),
                 transfer.getAmount());
+
+
+        Account account=accountDAO.findAccountbyAccountID(transfer.getAccount_from());
+     account.setBalance(account.getBalance()-transfer.getAmount());
+
+     Account account1=accountDAO.findAccountbyAccountID(transfer.getAccount_to());
+     account1.setBalance(account1.getBalance()+transfer.getAmount());
+
+
+    String updateUserBalanceSql = "UPDATE accounts SET account_id =?, user_id = ?, balance = ? WHERE account_id = ?";
+     jdbcTemplate.update(updateUserBalanceSql,account.getAccount_id(),account.getUser_id(),account.getBalance(),account.getAccount_id());
+
+     String sqlReceiverBalanceSql="UPDATE accounts SET account_id =?, user_id = ?, balance = ? WHERE account_id = ?";
+     jdbcTemplate.update(sqlReceiverBalanceSql,account1.getAccount_id(),account1.getUser_id(),account1.getBalance(),account1.getAccount_id());
+
+
+
+
         return transfer;
     }
 
