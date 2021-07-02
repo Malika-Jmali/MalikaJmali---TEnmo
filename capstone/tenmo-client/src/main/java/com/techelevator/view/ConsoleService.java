@@ -174,11 +174,13 @@ public class ConsoleService {
 
 		for (Transfer transfer : transfers) {
 			if (transfer.getUsernameFrom().equalsIgnoreCase(username)) {
-				System.out.println(String.format("%-20d %-20s $%-20.2f", transfer.getTransfer_id(), transfer.getUsernameTo(), transfer.getAmount()));
+				System.out.println(String.format("%-20d %-5s %-20s $%-20.2f", transfer.getTransfer_id(),"From:", transfer.getUsernameTo(), transfer.getAmount()));
 			}
 			if (transfer.getUsernameTo().equalsIgnoreCase(username)) {
-				System.out.println(String.format("%-20d %-20s $%-20.2f", transfer.getTransfer_id(), transfer.getUsernameFrom(), transfer.getAmount()));
+				System.out.println(String.format("%-20d %-5s %-20s $%-20.2f", transfer.getTransfer_id(),"To:", transfer.getUsernameFrom(), transfer.getAmount()));
+
 			}
+
 		}
 
 		System.out.println();
@@ -186,6 +188,11 @@ public class ConsoleService {
 
 	}
 
+	public int transferIdFromUser() {
+		System.out.println("Please enter transfer ID to approve/reject (0 to cancel): \"\n ");
+		int transferID = Integer.parseInt(in.next());
+		return transferID;
+	}
 
 	//**************************************************************************************************TRANSFERLIST
 
@@ -197,31 +204,31 @@ public class ConsoleService {
 			return;
 		}
 
-		//System.out.println(String.format("%-20d %-20s $%-20.2f", transfer.getTransfer_id(), transfer.getUserIdentity(), transfer.getAmount()));
-		//	System.out.println(String.format("%-20d %-20s %-20.2f",transfer.getTransfer_id(),transfer.getAccount_to(),transfer.getAmount()));
-
 
 	}
 
+	public void printTransferDetails(Transfer[] transfers,int transfer_id) {
+		System.out.println("\n__________________________________________");
+		System.out.println("Transfer Details");
+		System.out.println("--------------------------------------------\n");
+		for (Transfer transfer : transfers) {
+			if (transfer.getTransfer_id() == transfer_id) {
+				System.out.println("Id: " + transfer.getTransfer_id());
+				System.out.println("From: " + transfer.getUsernameFrom());
+				System.out.println("To: "+transfer.getUsernameTo());
+				if(transfer.getTransfers_type_id()==2){
+					System.out.println("Type: Send");
+				}
+				if(transfer.getTransfers_status_id()==2){
+					System.out.println("Status: Approved");
+				}
+				System.out.println("Amount: $" + transfer.getAmount());
+			}
 
-//	public void printTransferList(int user_id){
-//		Transfer transfer = new Transfer();
-//		User user_name= new User();
-//		transfer.setTransfer_id(transfer);
-//	}
 
-//	public void showTransfers(Transfer[] transfers) {
-//
-//		System.out.println("----------------------------------------------------------------------------------");
-//		System.out.println("Transfers");
-//		System.out.println(String.format("%-20s %-20s", "ID", "Name"));
-//		System.out.println("----------------------------------------------------------------------------------");
-//
-//		for (Account account1 : transfers) {
-//			System.out.println(String.format("%-20d %-20s", account1.getUser_id(), account1.getUser_name()));
-//
-//		}
+		}
 
+	}
 }
 
 

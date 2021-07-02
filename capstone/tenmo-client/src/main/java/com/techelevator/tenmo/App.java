@@ -88,8 +88,24 @@ public class App {
 		// TODO Auto-generated method stub
 		Transfer[] transfers=accountService.retrieveTransferList(userAccount.getUser_id());
 		console.printListOfTransfers(transfers,userAccount.getUser_name());
+		int transferId=console.transferIdFromUser();
+		console.printTransferDetails(transfers,transferId);
 
-		//User user=accountService.retrieveUserByUserName(userAccount.getUser_name());
+
+//		for (Transfer transfer1 : transfers) {
+//			if (transfer1.getTransfer_id()==transferId){
+//				System.out.println("\n__________________________________________");
+//				System.out.println("Transfer Details");
+//				System.out.println("--------------------------------------------\n");
+//				System.out.println("Id:"+ transfer1.getTransfer_id());
+//				System.out.println("From:"+transfer1.getUsernameFrom());
+//				System.out.println("Type:"+ transfer1.getTransfers_type_id());
+//				System.out.println("Status:"+transfer1.getTransfers_status_id());
+//				System.out.println("Amount: $"+ transfer1.getAmount());
+//			}
+//
+//		}
+//
 
 
 	}
